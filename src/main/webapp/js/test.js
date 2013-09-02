@@ -63,7 +63,8 @@ define([ 'knockout', 'jquery' ], function(ko, $) {
             // START SNIPPET: jasminebasic2
             if (location.href.indexOf('test.html') != -1) {
               // if this has been loaded on test.html, only run unit tests
-              require([  ], function() {
+              require([ "tests/menuTest" ], function() {
+                // alert('connect debugger');
                 jasmineEnv.execute();
               });
             } else {
@@ -73,6 +74,7 @@ define([ 'knockout', 'jquery' ], function(ko, $) {
               "modules/tests/vesselTest", "modules/tests/sightingTest",
                   "modules/tests/timezoneTest" // add '0' for tests with real backend - for demo purposes
               ], function() {
+                // alert('connect debugger');
                 jasmineEnv.execute();
               });
             }
