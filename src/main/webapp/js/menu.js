@@ -37,13 +37,16 @@ define([ 'knockout', 'crossroads', 'knockout.i18n' ], function(ko, crossroads) {
     // START SNIPPET: i18next7
     self.language = ko.observable("de");
 
-    /* subscribe to the variable above. When it is changed, change the language
-     * in i18next as well. Only after the language resources have been loaded, the observable
-     * for the language computeds is updated.
+    /*
+     * subscribe to the variable above. When it is changed, change the language
+     * in i18next as well. Only after the language resources have been loaded,
+     * the observable for the language computeds is updated.
      */
     self.language.subscribe(function(newLanguage) {
       $.i18n.setLng(newLanguage, function() {
-        ko.language(newLanguage);
+        if (ko.language() != newLanguage) {
+          ko.language(newLanguage);
+        }
       });
     });
     // END SNIPPET: i18next7

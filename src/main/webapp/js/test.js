@@ -1,4 +1,4 @@
-define([ 'knockout' ], function(ko) {
+define([ 'knockout', 'jquery' ], function(ko, $) {
 
   return function() {
     // START SNIPPET: jasminebasic4
@@ -8,6 +8,9 @@ define([ 'knockout' ], function(ko) {
       // START SNIPPET: jasminebasic1
       require([ "jasmine", "jasmine-html", "sinon", "jasmine-junit" ],
           function(jasmine) {
+
+            // disable all animations for jquery; this makes tests run even faster
+            $.fx.off = true;
 
             // dynamically add CSS to the page
             var link = document.createElement("link");
@@ -58,14 +61,21 @@ define([ 'knockout' ], function(ko) {
              * path we need to require these, so they are available later.
              */
             // START SNIPPET: jasminebasic2
-            require([ "modules/tests/vesselTest", "modules/tests/sightingTest",
-                "modules/tests/timezoneTest" ], function(vesselTest,
-                sightingTest, timezoneTest) {
-              vesselTest();
-              sightingTest();
-              timezoneTest();
-              jasmineEnv.execute();
-            });
+            if (location.href.indexOf('test.html') != -1) {
+              // if this has been loaded on test.html, only run unit tests
+              require([  ], function() {
+                jasmineEnv.execute();
+              });
+            } else {
+              // otherwise load gui tests
+              require([
+              // tests with mocked backend
+              "modules/tests/vesselTest", "modules/tests/sightingTest",
+                  "modules/tests/timezoneTest" // add '0' for tests with real backend - for demo purposes
+              ], function() {
+                jasmineEnv.execute();
+              });
+            }
             // END SNIPPET: jasminebasic2
 
             // clear
